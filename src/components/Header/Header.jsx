@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import Container from "../Container/Container";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TrueFalseManageContext } from "../../context/trueFalseManage/TrueFalseManageContext";
 import Modal from "../modal/Modal";
 
@@ -43,12 +43,24 @@ const logedUserMenu = [
 
 const Header = () => {
   const navigate = useNavigate();
+  const [token, setToken] = useState(null);
+    // Initialize token state from localStorage
+    useEffect(() => {
+      const storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        setToken(storedToken);
+      }
+    }, [])
+    const handleTokenFalse = () => {
+      localStorage.removeItem("token");
+      setToken(null);
+      navigate("/"); // Redirect to login page after logout
+    };
 
   // check loged user or not
   const {
-    token,
     showModal,
-    handleTokenFalse,
+  
     handleShowModal,
     handleHideModal,
     showLogedUserMenu,
@@ -56,11 +68,10 @@ const Header = () => {
     handleHideLogedUserMenu,
   } = useContext(TrueFalseManageContext);
   // handle navigate for mobile
-  const handleNavigate = ( ) =>{
-    navigate("/create-account")
-    handleHideModal()
-  
-  }
+  const handleNavigate = () => {
+    navigate("/create-account");
+    handleHideModal();
+  };
   const dropdownRef = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -159,10 +170,7 @@ const Header = () => {
               </div>
             </div>
           ) : (
-            <div
-              className="logOutUser "
-              onClick={ handleNavigate}
-            >
+            <div className="logOutUser " onClick={handleNavigate}>
               <ButtonComponent
                 btnBgColor="bg-primary"
                 btnWidth="w-full"

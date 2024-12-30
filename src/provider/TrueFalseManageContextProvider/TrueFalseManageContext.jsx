@@ -3,10 +3,9 @@ import { TrueFalseManageContext } from "../../context/trueFalseManage/TrueFalseM
 
 // eslint-disable-next-line react/prop-types
 const TrueFalseManageContextProvider = ({ children }) => {
-  const [token, setToken] = useState(true);
+  
   const [showLogedUserMenu, setShowLogedUserMenu] = useState(false);
-  // handle Token
-  const handleTokenFalse = () => setToken(false);
+
   // handle showLogedUserMenu
   const handleshowLogedUserMenu = () => setShowLogedUserMenu(!showLogedUserMenu);
   const handleHideLogedUserMenu = () => setShowLogedUserMenu(false);
@@ -31,7 +30,6 @@ const TrueFalseManageContextProvider = ({ children }) => {
 
 
   const value = {
-    token,
     login,
     handleTrueLogin,
 
@@ -39,8 +37,7 @@ const TrueFalseManageContextProvider = ({ children }) => {
     setShowModal,
     handleShowModal,
     handleHideModal,
-    setToken,
-    handleTokenFalse,
+  
     showLogedUserMenu,
     showFilterModal,
     handleshowLogedUserMenu,
